@@ -1,0 +1,8 @@
+---
+ - hosts: all
+   become: true
+   tasks: 
+        - name: "Add a line to a file if it does not exists. Without passing regexp"
+          lineinfile:
+                  path: /tmp/testfile
+                  line: '192.168.1.99   foo.lab.net     foo'
