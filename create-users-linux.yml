@@ -19,3 +19,9 @@
                   shell: /sbin/nologin
                   uid: 20000
                   home: /var/ftp/pub
+        
+        - name: "change password for user create"
+          shell: | 
+           echo "{{item}}:Tuadoo4u|chpasswd"
+          with_items: 
+           - ftpadmin
