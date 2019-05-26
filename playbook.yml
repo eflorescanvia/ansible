@@ -6,3 +6,10 @@
           lineinfile:
                   path: /tmp/testfile
                   line: '192.168.1.99   foo.lab.net     foo'
+        
+        - name: "Fully quoted because of the : on the line. See the Gotchas in the YAML docs"
+          lineinfile:
+                  path: /etc/sudoers
+                  state: present
+                  regex: '^%wheel\s'
+                  line: '%wheel ALL=(ALL) NOPASSWD: ALL' 

@@ -1,0 +1,47 @@
+---
+ - hosts: all
+   become: true
+   tasks: 
+        - name: The users into modules. 
+          group: 
+              name: '{{item}}'
+              state: present
+          with_items:
+                  - cnvadmin
+                  - admin
+                  - wheel 
+
+        - name: create the administrador user as a member of the administrator groups
+          user:
+                  name: administrador
+                  state: present
+                  groups: admin,wheel
+                  append: yes
+
+        - name: make sure that the cnvbflor user does not exist ( I have stopped working )
+          user:
+                name: cnvbeflor
+                state: absent
+
+        - name: create the users of the linux equipment
+          user:
+               state: present
+               group: cnvadmin
+               name: '{{item}}'
+          with_items:
+                  - cnvcvega
+                  - cnvrgara
+                  - cnvjrodr
+                  - cnvoeche
+                  - cnveflor
+                  - cnvhmele
+
+        - name: asign default keys and force password change to created users 
+          shell: | 
+                  echo "{{item}}:Tuadoo4u" | chpasswd 
+                  chage -d 99999 "{{item}}"
+          with_items:
+                  - administrador
+                  - cnvcvega
+                  - cnvrgara 
+               
