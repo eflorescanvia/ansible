@@ -1,0 +1,46 @@
+---
+ - hosts: all
+   become: true
+   tasks:
+           - name: "Install software for ubuntu essential packages"
+             when: ansible_os_family == 'Debian'
+             apt:
+                     state: present
+                     update_cache: yes
+                     name: '{{item}}'
+             with_items:
+                     - at
+                     - host
+                     - iotop
+                     - lsscsi
+                     - ntpdate 
+                     - procps
+                     - psmisc
+                     - rsync 
+                     - screen 
+                     - systat
+                     - tcpdump
+                     - telnet
+                     - traceroute 
+                     - wget
+
+        - name: "Install software for CentOS essential packages "
+          when: ansible_os_family == "RedHat"
+          yum:
+                state: present
+                name: '{{item}}'
+          with_items:
+                - at
+                - bind-utils
+                - iotop
+                - lsscsi
+                - ntpdate
+                - procps
+                - psmisc
+                - rsync
+                - screen
+                - systat 
+                - tcpdump
+                - telnet
+                - traceroute 
+                - wget
