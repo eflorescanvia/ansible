@@ -1,0 +1,21 @@
+--- 
+ - hosts: all
+   become: true
+   tasks: 
+        - name: "Create the users from system"
+          user:
+                  name: '{{item}}'
+                  state: present
+                  system: yes
+                  shell: /sbin/nologin
+          with_items:
+                - sapadm
+                - oracle
+
+        - name: "create the users to services ftp"
+          user:
+                  name: ftpadmin
+                  state: present
+                  shell: /sbin/nologin
+                  uid: 20000
+                  home: /var/ftp/pub
